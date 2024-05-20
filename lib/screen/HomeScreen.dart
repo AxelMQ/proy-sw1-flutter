@@ -10,8 +10,34 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Proyecto App'),
         elevation: 5,
         backgroundColor: Colors.black38,
+        actions: [
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: const MaterialStatePropertyAll(Colors.blueGrey),
+              shape: MaterialStatePropertyAll(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(17),
+                ),
+              ),
+            ),
+            child: const Text(
+              'Ingresar',
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              print('Ingresar');
+            },
+          )
+        ],
       ),
-      body: const Center(child: Text('Home Screen')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 150),
+        child: Column(
+          children: const [
+            Text('Home Screen'),
+          ],
+        ),
+      ),
     );
   }
 }

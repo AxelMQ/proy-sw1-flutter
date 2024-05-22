@@ -1,40 +1,26 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final String token;
+  final String username;
+
+  const HomeScreen({super.key, required this.token, required this.username});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Proyecto App'),
-        elevation: 5,
-        backgroundColor: Colors.black38,
-        actions: [
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: const MaterialStatePropertyAll(Colors.blueGrey),
-              shape: MaterialStatePropertyAll(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17),
-                ),
-              ),
-            ),
-            child: const Text(
-              'Ingresar',
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              print('Ingresar');
-            },
-          )
-        ],
-      ),
+          title: const Text('Proyecto App'),
+          elevation: 5,
+          backgroundColor: Colors.black38),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 150),
+        padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
         child: Column(
-          children: const [
-            Text('Home Screen'),
+          children: [
+            const Text('Home Screen'),
+            const SizedBox(height: 150),
+            Text('Username: $username' ),
+            Text('Token:  $token'),
           ],
         ),
       ),

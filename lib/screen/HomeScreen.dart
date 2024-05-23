@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'BuscadorPageScreen.dart';
-import 'HomePageScreen.dart';
-import 'PerfilPageScreen.dart';
+import 'pages/BuscadorPageScreen.dart';
+import 'pages/HomePageScreen.dart';
+import 'pages/PerfilPageScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String token;
@@ -16,11 +16,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  
+
   late List<Widget> _widgetOptions;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _widgetOptions = <Widget>[
       HomePageScreen(token: widget.token, username: widget.username),
@@ -45,17 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           elevation: 5,
           backgroundColor: Colors.amber[800]),
-      // body: Padding(
-      //   padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-      //   child: Column(
-      //     children: <Widget>[
-      //       const Text('Home Screen'),
-      //       const SizedBox(height: 150),
-      //       Text('Username: ${widget.username}'),
-      //       Text('Token:  ${widget.token}'),
-      //     ],
-      //   ),
-      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

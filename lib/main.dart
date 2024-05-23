@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       routes: {
         // '/home' : (context) => const HomeScreen(),
         '/login' : (context) => const LoginScreen(),
-        '/registerData' :(context) => const RegisterUserDataScreen(),
       },
       theme: ThemeData(useMaterial3: true),
     );

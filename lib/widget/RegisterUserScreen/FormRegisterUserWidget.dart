@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:proy_sw1/screen/LoginScreen.dart';
+import 'package:proy_sw1/screen/RegisterUserDataScreen.dart';
 import '../ButtonWidget.dart';
 import '../FormTextFieldWidget.dart';
 import '../FormTextPasswordWidget.dart';
@@ -48,9 +48,11 @@ class _FormRegisterUserWidgetState extends State<FormRegisterUserWidget> {
         },
       );
       print('RESPUESTA DEL SERVIDOR: ${response.data}');
+      final userId = response.data['user']['id'];
+      final username = response.data['user']['username'];
       Navigator.of(context).pop();
-      _showConfirmationDialog(
-          'Registro Exitoso', 'Usuario registrado exitosamente.');
+      _showConfirmationDialog('Registro Exitoso',
+          'Complete sus Datos Personales.', userId, username);
     } catch (e) {
       Navigator.of(context).pop();
       // ignore: deprecated_member_use
@@ -61,19 +63,19 @@ class _FormRegisterUserWidgetState extends State<FormRegisterUserWidget> {
           errors.forEach((key, value) {
             errorMessages += '${value[0]}\n';
           });
-          _showConfirmationDialog('Error', errorMessages);
+          _showConfirmationDialog('Error', errorMessages, 0, '');
         } else {
           _showConfirmationDialog('Error',
-              'No se pudo registrar el usuario. Verifique los datos proporcionados.');
+              'No se pudo registrar el usuario. Verifique los datos proporcionados.', 0, '');
         }
       } else {
         _showConfirmationDialog('Error',
-            'No se pudo registrar el usuario. Verifique los datos proporcionados.');
+            'No se pudo registrar el usuario. Verifique los datos proporcionados.', 0, '');
       }
     }
   }
 
-  void _showConfirmationDialog(String title, String message) {
+  void _showConfirmationDialog(String title, String message, int userId, String username) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -119,7 +121,7 @@ class _FormRegisterUserWidgetState extends State<FormRegisterUserWidget> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()),
+                        builder: (context) => RegisterUserDataScreen(userId: userId, username: username,)),
                   );
                   usernameController.clear();
                   passwordController.clear();
@@ -127,7 +129,7 @@ class _FormRegisterUserWidgetState extends State<FormRegisterUserWidget> {
                 }
               },
               child: Text(
-                'OK',
+                'Continuar',
                 style: GoogleFonts.titilliumWeb(
                     fontSize: 15,
                     color: Colors.black,
@@ -145,19 +147,23 @@ class _FormRegisterUserWidgetState extends State<FormRegisterUserWidget> {
     return Form(
       key: _formKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           FormTextFieldWidget(
             text: 'Usuario',
             controllerForm: usernameController,
             onValidator: (p0) => p0!.isEmpty ? 'Campo Requerido' : null,
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 20),
           FormTextPasswordWidget(
             text: 'Contraseña',
             controllerForm: passwordController,
             onValidator: (p0) => p0!.isEmpty ? 'Campo Requerido' : null,
           ),
-          const SizedBox(height: 15),
+          Text('     *Minimo 8 caracteres.',
+              style: GoogleFonts.titilliumWeb(
+                  fontSize: 13, fontWeight: FontWeight.w300)),
+          const SizedBox(height: 13),
           FormTextPasswordWidget(
             text: 'Confirmar Contraseña',
             controllerForm: confirmController,

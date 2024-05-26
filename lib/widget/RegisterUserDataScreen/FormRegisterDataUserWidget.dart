@@ -86,10 +86,18 @@ class _FormRegisterDataUserWidgetState
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
           ),
         ));
-        _showConfirmationDialog('Registro Exitoso', 'Datos Personales registrados correctamente.');
+        _showConfirmationDialog(
+            'Registro Exitoso', 'Datos Personales registrados correctamente.');
       } else {
         print('Error: ${response.data}');
-        _showConfirmationDialog('Error', '${response.data['message']}');
+        final errors = response.data['errors'];
+        String errorMessages = '';
+        errors.forEach((key, value) {
+          errorMessages += '${value[0]}\n';
+        });
+
+        _showConfirmationDialog(
+            'Error', '${response.data['message']} : \n $errorMessages');
       }
     } catch (e) {
       print('ERROR: $e');
@@ -151,13 +159,21 @@ class _FormRegisterDataUserWidgetState
                   );
                 }
               },
-              child: Text(
-                'Iniciar Sesion',
-                style: GoogleFonts.titilliumWeb(
-                    fontSize: 15,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
+              child: title == 'Error'
+                  ? Text(
+                      'Reintentar',
+                      style: GoogleFonts.titilliumWeb(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    )
+                  : Text(
+                      'Iniciar Sesion',
+                      style: GoogleFonts.titilliumWeb(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
             ),
           ],
         );

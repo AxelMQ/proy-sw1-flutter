@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BuscadorPageScreen extends StatelessWidget {
-  final String token;
-  final String username;
+  final String? token;
+  final String? username;
 
   const BuscadorPageScreen(
-      {super.key, required this.token, required this.username});
+      {super.key, this.token, this.username});
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:proy_sw1/service/storage_service.dart';
 
 import 'pages/BuscadorPageScreen.dart';
 import 'pages/HomePageScreen.dart';
 import 'pages/PerfilPageScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String token;
-  final String username;
+  final String? token;
+  final String? username;
 
-  const HomeScreen({super.key, required this.token, required this.username});
+  const HomeScreen({super.key, this.token, this.username});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,12 +17,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  String? savedToken;
 
   late List<Widget> _widgetOptions;
 
   @override
   void initState() {
     super.initState();
+    _loadToken();
     _widgetOptions = <Widget>[
       HomePageScreen(token: widget.token, username: widget.username),
       BuscadorPageScreen(token: widget.token, username: widget.username),
@@ -33,6 +36,18 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> _loadToken() async{
+    String? token = await StorageService.getToken();
+    setState(() {
+      savedToken = token;
+    });
+    if (token != null) {
+      print('TOKEN GUARDADO: $token');
+    } else {
+      print('NO SE ENCONTRO NINGUN TOKEN');
+    }
   }
 
   @override

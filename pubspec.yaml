@@ -43,6 +43,7 @@ dependencies:
   image_picker: ^1.0.4
   email_validator: ^2.1.17
   image_cropper: ^4.0.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:proy_sw1/screen/HomeScreen.dart';
+import 'package:proy_sw1/service/storage_service.dart';
 import '../ButtonWidget.dart';
 import '../FormTextFieldWidget.dart';
 import '../FormTextPasswordWidget.dart';
@@ -57,6 +58,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
 
         final token = response.data['token'];
         final username = response.data['username'];
+        await StorageService.saveToken(token);
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(

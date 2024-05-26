@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PerfilPageScreen extends StatelessWidget {
-  final String token;
-  final String username;
+  final String? token;
+  final String? username;
   const PerfilPageScreen(
-      {super.key, required this.token, required this.username});
+      {super.key, this.token, this.username});
 
   @override
   Widget build(BuildContext context) {

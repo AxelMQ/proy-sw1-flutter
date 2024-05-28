@@ -4,11 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 class MenuItemWidget extends StatefulWidget {
   final TextEditingController sexoController;
   final String? Function(String?)? onValidator;
+  final String? initialValue;
 
   const MenuItemWidget({
     required this.sexoController,
     super.key, 
-    this.onValidator,
+    this.onValidator, this.initialValue,
   });
 
   @override
@@ -50,6 +51,7 @@ class _MenuItemWidgetState extends State<MenuItemWidget> {
         });
       },
       validator: widget.onValidator,
+      value: widget.initialValue,
     );
   }
 }

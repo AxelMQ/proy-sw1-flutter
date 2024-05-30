@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final apiService = ApiService();
       final response = await apiService.getUserData();
-      print('RESPONSE DATA: $response');
+      print('--> RESPONSE DATA: $response');
       setState(() {
         if (response['user'] != null && response['userData'] != null) {
           _user = User.fromJson(response['user']);

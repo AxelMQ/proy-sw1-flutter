@@ -59,6 +59,9 @@ class PerfilPageScreen extends StatelessWidget {
                 '${userData?.nombre ?? ''} ${userData?.apellido ?? ''}',
                 style: GoogleFonts.chakraPetch(
                     fontSize: 25, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
               Text(
                 '@${user?.username ?? ''}',
@@ -90,12 +93,14 @@ class PerfilPageScreen extends StatelessWidget {
                     backgroundColor: Colors.black38,
                     text: 'Editar Informacion',
                     onTap: () {
-                      print('EDITAR INFORMACION');
+                      // print('EDITAR INFORMACION');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                EditUserDataScreen(userData: userData)),
+                            builder: (context) => EditUserDataScreen(
+                                  userData: userData,
+                                  user: user,
+                                )),
                       );
                     },
                   ),

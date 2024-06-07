@@ -28,6 +28,7 @@ class HomePageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
           child: Column(

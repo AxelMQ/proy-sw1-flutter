@@ -17,22 +17,22 @@ class EditUserDataScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: Text(
-            '@${user!.username}',
+            '@${user?.username}',
             style: GoogleFonts.titilliumWeb(fontWeight: FontWeight.w400),
           ),
           elevation: 5,
           backgroundColor: Colors.amber[800]),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Center(
-                child: AnimationWidget(path: 'assets/user_animation.json'),
-              ),
+              // const Center(
+              //   child: AnimationWidget(path: 'assets/user_animation.json'),
+              // ),
               const TitleTextWidget(text: 'EDITAR INFORMACION'),
-              const Divider(height: 30),
+              const Divider(height: 50),
               FormEditUserDataWidget(
                 userData: userData,
               ),

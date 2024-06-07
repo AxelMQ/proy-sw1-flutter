@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, unnecessary_null_comparison
+// ignore_for_file: file_names, unnecessary_null_comparison, use_build_context_synchronously
 
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
@@ -36,6 +36,16 @@ class _FormEditUserDataWidgetState extends State<FormEditUserDataWidget> {
   final Dio _dio = Dio();
 
   Future<void> _updateData() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Colors.deepOrange,
+          ),
+        );
+      },
+    );
     try {
       final Map<String, dynamic> userData = {
         'nombre': nombreController.text,
@@ -56,6 +66,7 @@ class _FormEditUserDataWidgetState extends State<FormEditUserDataWidget> {
           },
         ),
       );
+      Navigator.of(context).pop();
       if (response.statusCode == 200 || response.statusCode == 201) {
         // print('DATOS DEL USUARIO ACTUALIZADOS EXITOSAMENTE');
         _showConfirmationDialog('Datos Actualizados',
@@ -99,7 +110,6 @@ class _FormEditUserDataWidgetState extends State<FormEditUserDataWidget> {
             },
           );
         }
-        
       },
     );
   }

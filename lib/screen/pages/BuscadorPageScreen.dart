@@ -12,6 +12,7 @@ class BuscadorPageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Buscador Page'),
+        automaticallyImplyLeading: false,
       ),
       body: const Text('Pagina de Buscador'),
     );

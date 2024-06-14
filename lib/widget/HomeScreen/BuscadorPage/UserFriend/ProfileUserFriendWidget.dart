@@ -1,21 +1,23 @@
-// ignore_for_file: file_names
-import 'package:dio/dio.dart';
+// ignore_for_file: file_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:proy_sw1/service/storage_service.dart';
+import '../../../../data/user.dart';
 import '../../../../data/user_data.dart';
-import '../../../ButtonIconWidget.dart';
 import 'InfoDataProfileWidget.dart';
+import 'SolicitudButtonWidget.dart';
 
 class ProfileUserFriendWidget extends StatelessWidget {
-  ProfileUserFriendWidget({
+  const ProfileUserFriendWidget({
     super.key,
     required this.userData,
+    this.user,
+    required this.onStatusChanged,
   });
 
   final UserData? userData;
-  final Dio _dio = Dio();
+  final User? user;
+  final Function() onStatusChanged;
 
   String _formatDate(DateTime? date) {
     if (date != null) {
@@ -23,35 +25,6 @@ class ProfileUserFriendWidget extends StatelessWidget {
       return formatter.format(date);
     }
     return 'N/A';
-  }
-
-  Future<void> sendSolicitud(int friendId) async {
-    try {
-      String? token = await StorageService.getToken();
-      final response = await _dio.post(
-        'http://192.168.100.2:8000/api/send-solicitud/$friendId',
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer $token',
-          },
-          validateStatus: (status) {
-            return status! < 500;
-          },
-        ),
-      );
-
-      print('Status code: ${response.statusCode}');
-      print('Status message: ${response.statusMessage}');
-      print('Response data: ${response.data}');
-      // print(response.data);
-      if (response.statusCode == 200) {
-        print('Solicitud de amistad enviada.');
-      } else {
-        print('Error al enviar la solicitud de amistad.');
-      }
-    } catch (e) {
-      print('--> ERROR: $e');
-    }
   }
 
   @override
@@ -90,17 +63,10 @@ class ProfileUserFriendWidget extends StatelessWidget {
             text: _formatDate(userData?.fechaNac),
           ),
           const SizedBox(height: 15),
-          ButtonIconWidget(
-            text: 'Enviar Solicitud',
-            onTap: () {
-              if (userData != null) {
-                print('---> ENVIAR SOLICITUD... ${userData!.userId}');
-                sendSolicitud(userData!.userId);
-              } else {
-                print('--> USER DATA US NULL');
-              }
-            },
-          )
+          SolicitudButtonWidget(
+            user: user,
+            onStatusChanged: onStatusChanged,
+          ),
         ],
       ),
     );

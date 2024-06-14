@@ -6,10 +6,12 @@ import '../../../widget/HomeScreen/BuscadorPage/UserFriend/ProfileUserFriendWidg
 
 class ProfileUserScreen extends StatelessWidget {
   final User user;
+  final Function() onStatusChanged;
 
   const ProfileUserScreen({
     super.key,
-    required this.user,
+    required this.user, 
+    required this.onStatusChanged,
   });
 
   @override
@@ -20,7 +22,7 @@ class ProfileUserScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('@${user.username}'),
       ),
-      body: ProfileUserFriendWidget(userData: userData),
+      body: ProfileUserFriendWidget(userData: userData, user: user, onStatusChanged: onStatusChanged,),
     );
   }
 }

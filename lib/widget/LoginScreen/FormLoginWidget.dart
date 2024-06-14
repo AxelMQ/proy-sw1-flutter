@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unnecessary_const
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -68,10 +68,10 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                     )));
 
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: const Color.fromARGB(255, 67, 163, 117),
           content: Text(
             'Inicio Exitoso.',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
           ),
         ));
       } else if (response.statusCode == 404) {

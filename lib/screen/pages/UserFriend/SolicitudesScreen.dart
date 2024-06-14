@@ -2,8 +2,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:proy_sw1/service/storage_service.dart';
-import '../../../data/friendship.dart';
-import '../../../widget/HomeScreen/BuscadorPage/UserFriend/ListSolicitudAmistadWidget.dart';
+import '../../../data/user.dart';
+import '../../../widget/HomeScreen/BuscadorPage/UserResultWidget.dart';
 
 class SolicitudesScreen extends StatefulWidget {
   const SolicitudesScreen({super.key});
@@ -14,7 +14,7 @@ class SolicitudesScreen extends StatefulWidget {
 
 class _SolicitudesScreenState extends State<SolicitudesScreen> {
   final Dio _dio = Dio();
-  List<Friendship> _solicitudes = [];
+  List _solicitudes = [];
 
   Future<void> getSolicitudes() async {
     try {
@@ -36,10 +36,12 @@ class _SolicitudesScreenState extends State<SolicitudesScreen> {
       print('Response data: ${response.data}');
 
       if (response.statusCode == 200) {
-        final List solicitudes = response.data['solicitudes'];
+        final responseData = response.data;
+        final List<User> solicitudes = (responseData['solicitudes'] as List)
+            .map((userJson) => User.fromJson(userJson))
+            .toList();
         setState(() {
-          _solicitudes =
-              solicitudes.map((json) => Friendship.fromJson(json)).toList();
+          _solicitudes = solicitudes;
         });
       } else {
         print('Error al obtener las solicitudes de amistad');
@@ -53,17 +55,40 @@ class _SolicitudesScreenState extends State<SolicitudesScreen> {
   void initState() {
     super.initState();
     getSolicitudes();
+  }
 
+  void _handleStatusChanged() {
+    getSolicitudes();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Solicitudes de Amistad'),
-      ),
-      body: ListSolicitudAmistadWidget(solicitudes: _solicitudes),
-    );
+        appBar: AppBar(
+          title: const Text('Solicitudes de Amistad'),
+        ),
+        // body: ListSolicitudAmistadWidget(solicitudes: _solicitudes),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 1),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _solicitudes.length,
+                  itemBuilder: (context, index) {
+                    final user = _solicitudes[index];
+                    final userData = user.userData;
+
+                    return UserResultWidget(
+                      userData: userData,
+                      user: user,
+                      onStatusChanged: _handleStatusChanged,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
-

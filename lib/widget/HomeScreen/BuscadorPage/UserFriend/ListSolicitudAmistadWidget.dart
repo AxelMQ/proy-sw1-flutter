@@ -6,9 +6,10 @@ import '../../../../data/friendship.dart';
 
 class ListSolicitudAmistadWidget extends StatelessWidget {
   const ListSolicitudAmistadWidget({
-    super.key,
+    Key? key,
     required List<Friendship> solicitudes,
-  }) : _solicitudes = solicitudes;
+  })  : _solicitudes = solicitudes,
+        super(key: key);
 
   final List<Friendship> _solicitudes;
 
@@ -18,20 +19,22 @@ class ListSolicitudAmistadWidget extends StatelessWidget {
       itemCount: _solicitudes.length,
       itemBuilder: (context, index) {
         final solicitud = _solicitudes[index];
+        final userData = solicitud.user.userData;
+
         return InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProfileUserScreen(user: solicitud.user),
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => ProfileUserScreen(user: solicitud.user),
+            //   ),
+            // );
           },
           child: ListTile(
             leading: CircleAvatar(
               backgroundImage: solicitud.user.userData?.rutaFoto != null
                   ? NetworkImage(
-                      'http://192.168.100.2:8000/storage/${solicitud.user.userData!.rutaFoto}')
+                      'http://192.168.100.2:8000/storage/${userData!.rutaFoto}')
                   : const AssetImage('assets/user_profiler.jpg')
                       as ImageProvider,
             ),

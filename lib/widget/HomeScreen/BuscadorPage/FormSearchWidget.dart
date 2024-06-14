@@ -22,7 +22,7 @@ class _FormSearchWidgetState extends State<FormSearchWidget> {
   List _searchResults = [];
   Timer? _debounce;
 
-   @override
+  @override
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
@@ -36,7 +36,7 @@ class _FormSearchWidgetState extends State<FormSearchWidget> {
     super.dispose();
   }
 
-    _onSearchChanged() {
+  _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 150), () {
       if (_searchController.text.isNotEmpty) {
@@ -66,25 +66,35 @@ class _FormSearchWidgetState extends State<FormSearchWidget> {
         ),
       );
 
-      print('Status code: ${response.statusCode}');
-      print('Status message: ${response.statusMessage}');
-      print('Response data: ${response.data}');
-
       if (response.statusCode == 200) {
-        // final users = response.data['users'];
-        final List<User> users = (response.data['users'] as List)
-            .map((userJson) => User.fromJson(userJson))
-            .toList();
+        final responseData = response.data;
+        if (responseData != null && responseData['users'] != null) {
+          final List<User> users = (responseData['users'] as List)
+              .map((userJson) => User.fromJson(userJson))
+              .toList();
 
-        setState(() {
-          _searchResults = users;
-        });
+          setState(() {
+            _searchResults = users;
+          });
+        } else {
+          setState(() {
+            _searchResults = [];
+          });
+        }
       } else {
-        print('Error al buscar usuarios');
+        setState(() {
+          _searchResults = [];
+        });
       }
     } catch (e) {
-      print('Error: $e');
+      setState(() {
+        _searchResults = [];
+      });
     }
+  }
+
+  void _handleStatusChanged() {
+    searchUsers(_searchController.text);
   }
 
   @override
@@ -93,17 +103,13 @@ class _FormSearchWidgetState extends State<FormSearchWidget> {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       child: Column(
         children: [
-          // const Text('Pagina de Buscador'),
           TextFieldSearchWidget(
             searchController: _searchController,
             onTap: () {
-              // searchUsers(_searchController.text);
-              print(_searchController.text);
-              // print('---> BUSCAR USERNAME');
-               _searchController.clear();
-                  setState(() {
-                    _searchResults = [];
-                  });
+              _searchController.clear();
+              setState(() {
+                _searchResults = [];
+              });
             },
           ),
           const SizedBox(height: 10),
@@ -114,7 +120,11 @@ class _FormSearchWidgetState extends State<FormSearchWidget> {
                 final user = _searchResults[index];
                 final userData = user.userData;
 
-                return UserResultWidget(userData: userData, user: user);
+                return UserResultWidget(
+                  userData: userData,
+                  user: user,
+                  onStatusChanged: _handleStatusChanged,
+                );
               },
             ),
           ),

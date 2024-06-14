@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +6,9 @@ import '../../../data/user.dart';
 import '../../../data/user_data.dart';
 import '../../../screen/EditUserDataScreen.dart';
 import '../../ButtonWidget.dart';
+import '../BuscadorPage/UserFriend/InfoDataProfileWidget.dart';
 import 'ButtonPhotoWidget.dart';
+import 'GenderIconWidget.dart';
 import 'TextDataWidget.dart';
 
 class PerfilUserWidget extends StatelessWidget {
@@ -20,7 +21,7 @@ class PerfilUserWidget extends StatelessWidget {
   final UserData? userData;
   final User? user;
 
-    String _formatDate(DateTime? date) {
+  String _formatDate(DateTime? date) {
     if (date != null) {
       final DateFormat formatter = DateFormat('dd/MM/yyyy'); // Formato deseado
       return formatter.format(date);
@@ -65,22 +66,40 @@ class PerfilUserWidget extends StatelessWidget {
                   fontSize: 17, fontWeight: FontWeight.w300),
             ),
             const Divider(),
-            TextDataWidget(
-              title: 'Telefono: ',
-              textData: userData?.telefono ?? '',
+            InfoDataProfileWidget(
+              icon: Icons.phone,
+              text: userData?.telefono ?? 'N/A',
             ),
-            TextDataWidget(
-              title: 'Email: ',
-              textData: userData?.email ?? '',
+            InfoDataProfileWidget(
+              icon: Icons.email,
+              text: userData?.email ?? 'N/A',
             ),
-            TextDataWidget(
-              title: 'Sexo: ',
-              textData: userData?.sexo ?? '',
+            InfoDataProfileWidget(
+              iconWidget: GenderIconWidget(
+                gender: userData?.sexo ?? '',
+              ),
+              text: userData?.sexo ?? 'N/A',
             ),
-            TextDataWidget(
-              title: 'Fecha: ',
-              textData: _formatDate(userData?.fechaNac),
+            InfoDataProfileWidget(
+              icon: Icons.cake_rounded,
+              text: _formatDate(userData?.fechaNac),
             ),
+            // TextDataWidget(
+            //   title: 'Telefono: ',
+            //   textData: userData?.telefono ?? '',
+            // ),
+            // TextDataWidget(
+            //   title: 'Email: ',
+            //   textData: userData?.email ?? '',
+            // ),
+            // TextDataWidget(
+            //   title: 'Sexo: ',
+            //   textData: userData?.sexo ?? '',
+            // ),
+            // TextDataWidget(
+            //   title: 'Fecha: ',
+            //   textData: _formatDate(userData?.fechaNac),
+            // ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

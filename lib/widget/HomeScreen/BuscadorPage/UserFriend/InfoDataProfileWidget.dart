@@ -7,19 +7,27 @@ class InfoDataProfileWidget extends StatelessWidget {
     super.key,
     required this.text,
     this.icon,
+    this.iconWidget,
   });
 
   final String text;
   final IconData? icon;
+  final Widget? iconWidget;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 18,
-        ),
+        if (icon != null)
+          Icon(
+            icon,
+            size: 18,
+          ),
+        if (iconWidget != null)
+          Padding(
+            padding: const EdgeInsets.only(right: 0),
+            child: iconWidget,
+          ),
         const SizedBox(width: 5),
         Text(text,
             style: GoogleFonts.titilliumWeb(

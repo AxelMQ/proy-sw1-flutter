@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../../../data/user.dart';
 import '../../../../data/user_data.dart';
+import '../../PerfilPage/GenderIconWidget.dart';
 import 'InfoDataProfileWidget.dart';
 import 'SolicitudButtonWidget.dart';
 
@@ -57,6 +58,10 @@ class ProfileUserFriendWidget extends StatelessWidget {
           InfoDataProfileWidget(
             icon: Icons.email,
             text: userData?.email ?? 'N/A',
+          ),
+          InfoDataProfileWidget(
+            iconWidget: GenderIconWidget(gender: userData?.sexo ?? '',),
+            text: userData?.sexo ?? 'N/A',
           ),
           InfoDataProfileWidget(
             icon: Icons.cake_rounded,

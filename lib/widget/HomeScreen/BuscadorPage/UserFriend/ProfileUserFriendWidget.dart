@@ -1,12 +1,12 @@
 // ignore_for_file: file_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
+import 'package:proy_sw1/widget/HomeScreen/PerfilPage/PhotoPublicFriendWidget.dart';
 import '../../../../data/user.dart';
 import '../../../../data/user_data.dart';
-import '../../PerfilPage/GenderIconWidget.dart';
-import 'InfoDataProfileWidget.dart';
+import '../../PerfilPage/IconDataProfileWidget.dart';
 import 'SolicitudButtonWidget.dart';
+import 'publicFriendWidget.dart';
 
 class ProfileUserFriendWidget extends StatelessWidget {
   const ProfileUserFriendWidget({
@@ -20,27 +20,21 @@ class ProfileUserFriendWidget extends StatelessWidget {
   final User? user;
   final Function() onStatusChanged;
 
-  String _formatDate(DateTime? date) {
-    if (date != null) {
-      final DateFormat formatter = DateFormat('dd/MM/yyyy'); // Formato deseado
-      return formatter.format(date);
-    }
-    return 'N/A';
-  }
-
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<PublicFriendWidgetState> publicFriendKey =
+        GlobalKey<PublicFriendWidgetState>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (userData?.rutaFoto != null)
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'http://192.168.100.2:8000/storage/${userData!.rutaFoto}'),
-              radius: 60,
-            ),
+          PhotoPublicFriendWidget(
+            userData: userData,
+            user: user,
+            onStatusChanged: onStatusChanged,
+            publicFriendKey: publicFriendKey,
+          ),
           const SizedBox(height: 16),
           Text(
             '${userData?.nombre ?? 'N/A'} ${userData?.apellido ?? 'N/A'}',
@@ -50,28 +44,21 @@ class ProfileUserFriendWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),
-          const SizedBox(height: 5),
-          InfoDataProfileWidget(
-            icon: Icons.phone,
-            text: userData?.telefono ?? 'N/A',
+          const Divider(
+            height: 10,
+            thickness: 1.5,
+            endIndent: 20,
+            indent: 0,
           ),
-          InfoDataProfileWidget(
-            icon: Icons.email,
-            text: userData?.email ?? 'N/A',
-          ),
-          InfoDataProfileWidget(
-            iconWidget: GenderIconWidget(gender: userData?.sexo ?? '',),
-            text: userData?.sexo ?? 'N/A',
-          ),
-          InfoDataProfileWidget(
-            icon: Icons.cake_rounded,
-            text: _formatDate(userData?.fechaNac),
-          ),
+          IconDataProfileWidget(userData: userData),
           const SizedBox(height: 15),
           SolicitudButtonWidget(
-            user: user,
-            onStatusChanged: onStatusChanged,
-          ),
+              user: user,
+              publicFriendKey: publicFriendKey,
+              onStatusChanged: () {
+                onStatusChanged();
+                publicFriendKey.currentState?.refreshFriendsCount();
+              }),
         ],
       ),
     );

@@ -5,12 +5,14 @@ class User {
   final String username;
   final UserData? userData;
   final String? relationStatus;
+  final int? friendsCount;
 
   User({
     required this.id,
     required this.username,
     this.userData,
     required this.relationStatus,
+    this.friendsCount,
   });
 
   User copyWith({
@@ -18,12 +20,14 @@ class User {
     String? username,
     UserData? userData,
     String? relationStatus,
+    int? friendsCount
   }) {
     return User(
       id: id ?? this.id,
       username: username ?? this.username,
       userData: userData ?? this.userData,
       relationStatus: relationStatus ?? this.relationStatus,
+      friendsCount: friendsCount ?? this.friendsCount
     );
   }
 
@@ -35,6 +39,7 @@ class User {
           ? UserData.fromJson(json['user_data'])
           : null,
       relationStatus: json['relationship_status'],
+      friendsCount : json['friends_count']
     );
   }
 }

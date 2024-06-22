@@ -3,13 +3,20 @@
 import 'package:flutter/material.dart';
 import '../../data/user.dart';
 import '../../data/user_data.dart';
+import '../../widget/HomeScreen/PerfilPage/FloatingButtonWidget.dart';
 import '../../widget/HomeScreen/PerfilPage/PerfilUserWidget.dart';
 
 class PerfilPageScreen extends StatelessWidget {
   final User? user;
   final UserData? userData;
+  final Function() onStatusChanged;
 
-  const PerfilPageScreen({super.key, this.user, this.userData});
+  const PerfilPageScreen({
+    super.key,
+    this.user,
+    this.userData,
+    required this.onStatusChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,10 @@ class PerfilPageScreen extends StatelessWidget {
       body: PerfilUserWidget(
         userData: userData,
         user: user,
+        onStatusChanged: onStatusChanged,
       ),
+      floatingActionButton:
+          FlotatingButtonWidget(onStatusChanged: onStatusChanged),
     );
   }
 }

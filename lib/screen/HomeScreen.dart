@@ -1,7 +1,7 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:proy_sw1/service/api_service.dart';
 import 'package:proy_sw1/service/storage_service.dart';
-
 import '../data/user.dart';
 import '../data/user_data.dart';
 import 'pages/BuscadorPageScreen.dart';
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? savedToken;
   User? _user;
   UserData? _userData;
+  bool isLoading = true;
 
   late List<Widget> _widgetOptions;
 
@@ -36,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       PerfilPageScreen(
         user: _user,
         userData: _userData,
+        onStatusChanged: _fetchUserData,
       )
     ];
     _fetchUserData();
@@ -75,14 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
             PerfilPageScreen(
               user: _user,
               userData: _userData,
+              onStatusChanged: _fetchUserData,
             )
           ];
         } else {
           print('Response does not contain expected user data.');
         }
+        isLoading = false;
       });
     } catch (e) {
       print('Error fetching user data: $e');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -97,9 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           elevation: 5,
           backgroundColor: Colors.amber[800]),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      body: isLoading
+          ? const Center(
+              child: CircularProgressIndicator(color: Colors.deepOrange,),
+            )
+          : Center(
+              child: _widgetOptions.elementAt(_selectedIndex),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

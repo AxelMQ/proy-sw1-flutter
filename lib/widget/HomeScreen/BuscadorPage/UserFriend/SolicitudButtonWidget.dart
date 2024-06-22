@@ -1,9 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
-
+// ignore_for_file: use_build_context_synchronously, file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:proy_sw1/widget/HomeScreen/BuscadorPage/UserFriend/publicFriendWidget.dart';
 import '../../../../data/user.dart';
 import '../../../../service/storage_service.dart';
 import '../../../ButtonIconWidget.dart';
@@ -12,11 +11,13 @@ class SolicitudButtonWidget extends StatefulWidget {
   const SolicitudButtonWidget({
     super.key,
     this.user,
-    required this.onStatusChanged,
+    required this.onStatusChanged, 
+    required this.publicFriendKey,
   });
 
   final User? user;
   final Function() onStatusChanged;
+  final GlobalKey<PublicFriendWidgetState> publicFriendKey;
 
   @override
   State<SolicitudButtonWidget> createState() => _SolicitudButtonWidgetState();
@@ -104,6 +105,7 @@ class _SolicitudButtonWidgetState extends State<SolicitudButtonWidget> {
           },
         );
         widget.onStatusChanged();
+        widget.publicFriendKey.currentState?.refreshFriendsCount();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -161,8 +163,44 @@ class _SolicitudButtonWidgetState extends State<SolicitudButtonWidget> {
         color = Colors.blueGrey;
         iconData = Icons.notifications;
         onTap = () {
-          handleSolicitud(context, _user.id, 'accept',
-              'Solicitud de amistad aceptada exitosamente.');
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                padding: const EdgeInsets.all(10),
+                child: Wrap(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.check),
+                      title: Text(
+                        'Confirmar Solicitud',
+                        style: GoogleFonts.titilliumWeb(
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onTap: () {
+                        handleSolicitud(context, _user.id, 'accept',
+                            'Solicitud de amistad aceptada exitosamente.');
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.cancel),
+                      title: Text(
+                        'Rechazar Solicitud',
+                        style: GoogleFonts.titilliumWeb(
+                            fontWeight: FontWeight.w600),
+                      ),
+                      onTap: () {
+                        handleSolicitud(context, _user.id, 'rechazar',
+                            'Solicitud Rechazada.');
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+          );
           print('-->ACEPTAR SOLICITUD?');
         };
         break;

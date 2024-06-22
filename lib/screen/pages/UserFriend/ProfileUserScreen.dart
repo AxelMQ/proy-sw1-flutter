@@ -10,7 +10,7 @@ class ProfileUserScreen extends StatelessWidget {
 
   const ProfileUserScreen({
     super.key,
-    required this.user, 
+    required this.user,
     required this.onStatusChanged,
   });
 
@@ -22,7 +22,11 @@ class ProfileUserScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('@${user.username}'),
       ),
-      body: ProfileUserFriendWidget(userData: userData, user: user, onStatusChanged: onStatusChanged,),
+      body: ProfileUserFriendWidget(
+        userData: userData,
+        user: user,
+        onStatusChanged: onStatusChanged,
+      ),
     );
   }
 }

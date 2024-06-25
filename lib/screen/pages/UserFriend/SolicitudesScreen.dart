@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:proy_sw1/service/storage_service.dart';
 import '../../../data/user.dart';
 import '../../../widget/HomeScreen/BuscadorPage/UserResultWidget.dart';
@@ -20,8 +21,9 @@ class _SolicitudesScreenState extends State<SolicitudesScreen> {
   Future<void> getSolicitudes() async {
     try {
       String? token = await StorageService.getToken();
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.get(
-        'http://192.168.100.2:8000/api/solicitudes',
+        '$apiLaravel/solicitudes',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

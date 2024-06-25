@@ -1,16 +1,15 @@
-// ignore_for_file: use_build_context_synchronously
-
+// ignore_for_file: use_build_context_synchronously, file_names
 import 'package:flutter/material.dart';
 import 'package:proy_sw1/screen/LoginScreen.dart';
 import 'package:proy_sw1/service/storage_service.dart';
 import 'package:proy_sw1/widget/ButtonWidget.dart';
+import '../../widget/HomeScreen/HomePage/ButtonFloatingGenerate.dart';
 
 class HomePageScreen extends StatelessWidget {
   final String? token;
   final String? username;
 
-  const HomePageScreen(
-      {super.key, this.token, this.username});
+  const HomePageScreen({super.key, this.token, this.username});
 
   Future<void> _logout(BuildContext context) async {
     await StorageService.clearToken();
@@ -20,7 +19,6 @@ class HomePageScreen extends StatelessWidget {
     );
     String? _token = await StorageService.getToken();
     print('---> TOKEN: $_token');
-
   }
 
   @override
@@ -31,18 +29,20 @@ class HomePageScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('USERNAME: $username'),
-          Text('TOKEN: $token'),
-          const SizedBox(height: 30),
-          ButtonWidget(
-            text: 'Cerrar Sesion',
-            onTap: () => _logout(context),
-          )
-        ],
-      )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('USERNAME: $username'),
+            Text('TOKEN: $token'),
+            const SizedBox(height: 30),
+            ButtonWidget(
+              text: 'Cerrar Sesion',
+              onTap: () => _logout(context),
+            )
+          ],
+        ),
+      ),
+      floatingActionButton: const ButtonFloatingGenerateWidget(),
     );
   }
 }

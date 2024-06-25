@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../data/user.dart';
 import '../../../data/user_data.dart';
 import '../BuscadorPage/UserFriend/publicFriendWidget.dart';
@@ -23,6 +24,7 @@ class PhotoPublicFriendWidget extends StatefulWidget {
 }
 
 class _PhotoPublicFriendWidgetState extends State<PhotoPublicFriendWidget> {
+  final storage = dotenv.env['STORAGE'];
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -30,7 +32,7 @@ class _PhotoPublicFriendWidgetState extends State<PhotoPublicFriendWidget> {
         CircleAvatar(
           backgroundImage: widget.userData?.rutaFoto != null
               ? NetworkImage(
-                  'http://192.168.100.2:8000/storage/${widget.userData!.rutaFoto}')
+                  '$storage/${widget.userData!.rutaFoto}')
               : const AssetImage('assets/user_profiler.jpg')
                   as ImageProvider,
           radius: 85,

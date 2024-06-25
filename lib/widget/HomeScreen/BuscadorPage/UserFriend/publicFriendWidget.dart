@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types, file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_sw1/screen/pages/UserFriend/ListFriendScreen.dart';
 import '../../../../data/user.dart';
@@ -59,8 +60,9 @@ class PublicFriendWidgetState extends State<publicFriendWidget> {
   Future<int?> fetchFriendsCount(int userId) async {
     try {
       String? token = await StorageService.getToken();
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await Dio().get(
-        'http://192.168.100.2:8000/api/user/$userId/friendsCount',
+        '$apiLaravel/user/$userId/friendsCount',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

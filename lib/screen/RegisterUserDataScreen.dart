@@ -1,11 +1,7 @@
 // ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
-import 'package:proy_sw1/widget/TitleTextWidget.dart';
 import '../widget/RegisterUserDataScreen/FormRegisterDataUserWidget.dart';
-import '../widget/RegisterUserScreen/AnimationWidget.dart';
 
 class RegisterUserDataScreen extends StatelessWidget {
   final int userId;

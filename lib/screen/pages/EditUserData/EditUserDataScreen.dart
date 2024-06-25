@@ -1,10 +1,10 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_sw1/data/user.dart';
-import 'package:proy_sw1/widget/RegisterUserScreen/AnimationWidget.dart';
 import 'package:proy_sw1/widget/TitleTextWidget.dart';
-import '../data/user_data.dart';
-import '../widget/HomeScreen/PerfilPage/FormEditUserData.dart';
+import '../../../data/user_data.dart';
+import '../../../widget/HomeScreen/PerfilPage/EditUserData/FormEditUserData.dart';
 
 class EditUserDataScreen extends StatelessWidget {
   final UserData? userData;
@@ -28,9 +28,6 @@ class EditUserDataScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // const Center(
-              //   child: AnimationWidget(path: 'assets/user_animation.json'),
-              // ),
               const TitleTextWidget(text: 'EDITAR INFORMACION'),
               const Divider(height: 50),
               FormEditUserDataWidget(

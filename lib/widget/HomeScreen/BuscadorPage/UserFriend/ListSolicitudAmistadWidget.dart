@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:proy_sw1/screen/pages/UserFriend/ProfileUserScreen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../../data/friendship.dart';
 
 class ListSolicitudAmistadWidget extends StatelessWidget {
@@ -15,6 +15,7 @@ class ListSolicitudAmistadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final storage = dotenv.env['STORAGE'];
     return ListView.builder(
       itemCount: _solicitudes.length,
       itemBuilder: (context, index) {
@@ -34,7 +35,7 @@ class ListSolicitudAmistadWidget extends StatelessWidget {
             leading: CircleAvatar(
               backgroundImage: solicitud.user.userData?.rutaFoto != null
                   ? NetworkImage(
-                      'http://192.168.100.2:8000/storage/${userData!.rutaFoto}')
+                      '$storage/${userData!.rutaFoto}')
                   : const AssetImage('assets/user_profiler.jpg')
                       as ImageProvider,
             ),

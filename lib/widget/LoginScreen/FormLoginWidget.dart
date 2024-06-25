@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, unnecessary_const
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:proy_sw1/screen/HomeScreen.dart';
 import 'package:proy_sw1/service/storage_service.dart';
 import '../ButtonWidget.dart';
@@ -41,8 +41,9 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
           );
         });
     try {
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.post(
-        'http://192.168.100.2:8000/api/login',
+        '$apiLaravel/login',
         data: {
           'username': usernameController.text,
           'password': passwordController.text,

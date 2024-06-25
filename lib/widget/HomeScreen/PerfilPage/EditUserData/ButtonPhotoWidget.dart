@@ -2,13 +2,14 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:proy_sw1/data/user_data.dart';
-import '../../../screen/HomeScreen.dart';
-import '../../ButtonWidget.dart';
-import '../../MessageDialogWidget.dart';
+import '../../../../screen/HomeScreen.dart';
+import '../../../ButtonWidget.dart';
+import '../../../MessageDialogWidget.dart';
 import 'OptionDeletePhotoWidget.dart';
 
 class ButtonPhotoWidget extends StatelessWidget {
@@ -70,8 +71,9 @@ class ButtonPhotoWidget extends StatelessWidget {
             'ruta_foto': await MultipartFile.fromFile(imageFile.path),
           });
 
+          final apiLaravel = dotenv.env['API_LARAVEL'];
           final response = await _dio.post(
-            'http://192.168.100.2:8000/api/user-photo/${userData!.id}',
+            '$apiLaravel/user-photo/${userData!.id}',
             data: formData,
             options: Options(
               validateStatus: (status) {

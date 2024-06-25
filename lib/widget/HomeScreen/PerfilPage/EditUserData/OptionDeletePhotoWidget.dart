@@ -1,12 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../data/user_data.dart';
-import '../../../screen/HomeScreen.dart';
-import '../../MessageDialogWidget.dart';
+import '../../../../data/user_data.dart';
+import '../../../../screen/HomeScreen.dart';
+import '../../../MessageDialogWidget.dart';
 
 class OptionDeletePhotoWidget extends StatelessWidget {
   final UserData? userData;
@@ -74,8 +73,9 @@ class OptionDeletePhotoWidget extends StatelessWidget {
         });
 
     try {
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.delete(
-        'http://192.168.100.2:8000/api/user-photo/${userData!.id}',
+        '$apiLaravel/user-photo/${userData!.id}',
         options: Options(
           validateStatus: (status) {
             return status! < 500;

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:proy_sw1/service/storage_service.dart';
 
 class ApiService {
@@ -6,8 +7,9 @@ class ApiService {
 
   Future<Map<String, dynamic>> getUserData() async {
     String? token = await StorageService.getToken();
+    final apiLaravel = dotenv.env['API_LARAVEL'];
     final response = await _dio.get(
-      'http://192.168.100.2:8000/api/user',
+      '$apiLaravel/user',
       options: Options(
         headers: {
           'Authorization': 'Bearer $token',

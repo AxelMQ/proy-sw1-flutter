@@ -17,7 +17,7 @@ class FlotatingButtonWidget extends StatelessWidget {
       },
       backgroundColor: const Color.fromARGB(255, 245, 154, 79),
       child: const Icon(
-        Icons.refresh_rounded,
+        Icons.refresh_outlined,
         color: Colors.white,
       ),
     );

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:proy_sw1/screen/LoginScreen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../ButtonWidget.dart';
 import '../FormTextFieldWidget.dart';
 import 'FechaSelectWidget.dart';
@@ -65,9 +66,9 @@ class _FormRegisterDataUserWidgetState
         'user_id': widget.userId,
       });
       print('Datos enviados: $formData');
-
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.post(
-        'http://192.168.100.2:8000/api/userdata-register',
+        '$apiLaravel/userdata-register',
         data: formData,
         options: Options(
           validateStatus: (status) {

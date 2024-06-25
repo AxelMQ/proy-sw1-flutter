@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../data/user.dart';
 import '../../../service/storage_service.dart';
 import '../../../widget/HomeScreen/BuscadorPage/UserResultWidget.dart';
@@ -28,8 +29,9 @@ class _ListFriendScreenState extends State<ListFriendScreen> {
   Future<void> fetchFriends() async {
     try {
       String? token = await StorageService.getToken();
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.get(
-        'http://192.168.100.2:8000/api/list-friends/${widget.user!.id}',
+        '$apiLaravel/list-friends/${widget.user!.id}',
         options: Options(
           headers: {
             'Authorization': 'Bearer $token',

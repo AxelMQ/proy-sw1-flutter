@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../../data/user.dart';
 import '../../../service/storage_service.dart';
 import 'TextFieldSearchWidget.dart';
@@ -52,9 +53,9 @@ class _FormSearchWidgetState extends State<FormSearchWidget> {
   Future<void> searchUsers(String query) async {
     try {
       String? token = await StorageService.getToken();
-      // print('--> Token: $token');
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.get(
-        'http://192.168.100.2:8000/api/search-users',
+        '$apiLaravel/search-users',
         queryParameters: {'query': query},
         options: Options(
           headers: {

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_sw1/widget/HomeScreen/BuscadorPage/UserFriend/publicFriendWidget.dart';
 import '../../../../data/user.dart';
@@ -47,21 +48,22 @@ class _SolicitudButtonWidgetState extends State<SolicitudButtonWidget> {
         });
 
     String url = '';
+    final apiLaravel = dotenv.env['API_LARAVEL'];
     switch (action) {
       case 'send':
-        url = 'http://192.168.100.2:8000/api/send-solicitud/$friendId';
+        url = '$apiLaravel/send-solicitud/$friendId';
         break;
       case 'accept':
-        url = 'http://192.168.100.2:8000/api/aceptar-solicitud/$friendId';
+        url = '$apiLaravel/aceptar-solicitud/$friendId';
         break;
       case 'cancel':
-        url = 'http://192.168.100.2:8000/api/cancelar-solicitud/$friendId';
+        url = '$apiLaravel/cancelar-solicitud/$friendId';
         break;
       case 'rechazar':
-        url = 'http://192.168.100.2:8000/api/rechazar-solicitud/$friendId';
+        url = '$apiLaravel/rechazar-solicitud/$friendId';
         break;
       case 'delete':
-        url = 'http://192.168.100.2:8000/api/delete-friends/$friendId';
+        url = '$apiLaravel/delete-friends/$friendId';
         break;
       default:
         Navigator.of(context).pop();

@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:proy_sw1/screen/RegisterUserDataScreen.dart';
@@ -39,8 +39,9 @@ class _FormRegisterUserWidgetState extends State<FormRegisterUserWidget> {
     );
 
     try {
+      final apiLaravel = dotenv.env['API_LARAVEL'];
       final response = await _dio.post(
-        'http://192.168.100.2:8000/api/user-register',
+        '$apiLaravel/user-register',
         data: {
           'username': usernameController.text,
           'password': passwordController.text,

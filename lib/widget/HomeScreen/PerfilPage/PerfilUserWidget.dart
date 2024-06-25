@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:proy_sw1/widget/HomeScreen/BuscadorPage/UserFriend/publicFriendWidget.dart';
 import '../../../data/user.dart';
 import '../../../data/user_data.dart';
-import '../../../screen/EditUserDataScreen.dart';
+import '../../../screen/pages/EditUserData/EditUserDataScreen.dart';
 import '../../ButtonWidget.dart';
-import 'ButtonPhotoWidget.dart';
+import 'EditUserData/ButtonPhotoWidget.dart';
 import 'IconDataProfileWidget.dart';
 import 'PhotoPublicFriendWidget.dart';
 
